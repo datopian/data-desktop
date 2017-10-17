@@ -1,0 +1,14 @@
+node_modules/*
+
+# yarn
+yarn-error.log
+
+# sass
+.sass-cache
+
+# misc
+sandbox/*
+.env
+
+# builds
+dist/*

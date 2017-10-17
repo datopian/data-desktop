@@ -1,0 +1,46 @@
+{
+  "name": "data-desktop",
+  "version": "0.1.0",
+  "description": "Desktop application for DataHub",
+  "main": "main/index.js",
+  "scripts": {
+    "start": "electron main",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "datahub",
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    }
+  },
+  "author": "Datopian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/datahq/data-desktop/issues"
+  },
+  "homepage": "https://github.com/datahq/data-desktop#readme",
+  "devDependencies": {
+    "electron": "^1.7.9",
+    "electron-builder": "^19.37.2"
+  },
+  "dependencies": {
+    "app-root-path": "^2.0.1",
+    "child-process-promise": "^2.2.1",
+    "electron-is-dev": "^0.3.0",
+    "fix-path": "^2.1.0",
+    "fs-extra": "^4.0.2",
+    "global-packages": "^1.0.2",
+    "mkdirp": "^0.5.1",
+    "ms": "^2.0.0",
+    "node-fetch": "^1.7.3",
+    "path-exists": "^3.0.0",
+    "promisepipe": "^2.0.0",
+    "semver": "^5.4.1",
+    "sudo-prompt": "^7.1.1",
+    "tmp-promise": "^1.0.3",
+    "trim": "0.0.1",
+    "which-promise": "^1.0.0",
+    "winreg": "^1.2.4"
+  }
+}

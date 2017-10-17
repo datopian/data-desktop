@@ -1,0 +1,281 @@
+/* Jumbotron main
+====================================*/
+
+.jumbotron-primary, .jumbotron-secondary {
+  background: white;
+  padding-bottom: 5em;
+}
+
+.jumbotron-primary {
+  margin-top: -10px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  a.arrow {
+    font-size: 3em;
+  }
+}
+
+.jumbotron-secondary {
+  form {
+    margin-top: 30px;
+    input, textarea {
+      margin-bottom: 20px;
+    }
+  }
+  .medium {
+    padding: 0 5%;
+    @media (min-width: $screen-sm-min) {
+      padding: 0 15%;
+    }
+    @media (min-width: $screen-md-min) {
+      padding: 0 25%;
+    }
+    hr {
+      margin-bottom: 0;
+      border-top: 4px solid #000;
+    }
+  }
+  strong {
+    font-style: bold;
+  }
+}
+
+.container .jumbotron {
+  padding: 30px;
+  padding-top: 10px;
+  margin-bottom: 0;
+
+  .main-img {
+    width: 70px;
+    height: 70px;
+    margin: auto;
+  }
+
+  h1 {
+    font-weight: 200;
+    margin-bottom: 30px;
+  }
+  h1.main-title {
+    margin: 30px 0 20px;
+  }
+  .message {
+    font-style: italic;
+  }
+  a {
+    margin: 20px 0;
+  }
+
+  .request-access {
+    font-size: 80%;
+    text-style: italic;
+  }
+}
+
+.jumbotron .demo {
+  margin-top: 25px;
+
+  .console {
+    width: 450px;
+    height: 290px;
+    border-radius: 5px;
+    background: #000;
+    box-shadow: 70px 70px 100px 10px rgba(0,0,0,0.1);
+    margin: auto;
+  }
+
+  .window {
+    border: 1px solid #333;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 1px 2px 5px 0px rgba(0,0,0,0.1);
+  }
+
+  .browser {
+    background: #fff;
+    width: 450px;
+    height: 290px;
+    border-radius: 5px;
+    margin: auto;
+  }
+
+  .browser .window {
+    border-color:#fff;
+  }
+
+  .header {
+    width: 100%;
+    height: 36px;
+    position: absolute;
+
+    .title {
+      color: #999;
+      font-size: 12px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+      position: absolute;
+      top: 6px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      width: 200px;
+      margin: auto;
+      border-radius: 4px;
+      padding: 4px;
+    }
+
+    .title-bg {
+      background-color: #F7F7F7;
+    }
+
+    .icon {
+      border-radius: 50%;
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      position: absolute;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+
+    // rename from close to handle conflict with bootstrap
+    .close-terminal {
+      background-color: #ff5f56;
+      left: 13px;
+    }
+    .minimize {
+      background-color: #ffbd2e;
+      left: 33px;
+    }
+    .fullScreen {
+      background-color: #27c93f;
+      left: 53px;
+    }
+  }
+
+  .body {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    padding-top: 43px;
+    position: absolute;
+    overflow: auto;
+  }
+
+  .console-inner {
+    color: #fff;
+    font-size: 12px;
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+    line-height: 24px;
+    margin: 0 16px;
+
+    text-align: left;
+
+    pre {
+      font-size: 12px;
+      font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+      line-height: 20px;
+      margin: 0;
+      white-space: pre-wrap;
+      color: #fff;
+      background-color: transparent;
+      border: none;
+    }
+
+    .prompt {
+      color: #ccc;
+    }
+    .square {
+      color: #fff;
+    }
+
+    .cursor {
+      background: #f81ce5;
+      display: inline-block;
+      width: 7px;
+      height: 15px;
+      vertical-align: middle;
+    }
+  }
+
+  .browser .body img {
+    margin: auto;
+    max-height: 100%;
+  }
+}
+
+.jumbotron .call-to-action {
+	margin-top: 10px;
+
+	.subtitle {
+    font-family: -apple-system,BlinkMacSystemFont,"Droid Sans","Helvetica Neue",sans-serif;
+		font-size: 20px;
+		font-weight: 400;
+		margin-top: 40px;
+	}
+
+	p {
+		font-size: 14px;
+	}
+}
+
+.home {
+  .section-title {
+    margin-bottom: 50px;
+  }
+}
+
+/* Section 1
+====================================*/
+
+.section {
+  padding: 30px 0 0 0;
+  h1 {
+    font-size: 3em;
+    margin: 0.5em 0;
+    line-height: 1.625;
+  }
+  h3 {
+    text-align: left;
+    margin: 0 0 15px 0;
+  }
+  p {
+    text-align: left;
+    margin-bottom: 30px;
+  }
+  .row {
+    margin-bottom: 40px;
+  }
+  input {
+    width: 50%;
+    margin: auto;
+    margin-bottom: 100px;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+  }
+}
+
+.section-gray {
+  background-color: $gray-very-light;
+}
+
+.section-centered {
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+h2.section-title {
+  font-size: 32px;
+}
+
+.readable-width {
+  max-width: 650px;
+}
+
+.normal {
+  margin-bottom: 10px !important;
+}

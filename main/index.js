@@ -4,6 +4,7 @@ const url = require('url')
 
 // Packages
 const electron = require('electron')
+const appAutoUpdater = require("electron-updater").autoUpdater
 const fixPath = require('fix-path')
 const { resolve: resolvePath } = require('app-root-path')
 
@@ -40,6 +41,8 @@ app.on('ready', async () => {
   electron.ipcMain.on('online-status-changed', (event, status) => {
     process.env.CONNECTION = status
   })
+
+  appAutoUpdater.checkForUpdatesAndNotify()
 
   autoUpdater(mainWindow)
 })

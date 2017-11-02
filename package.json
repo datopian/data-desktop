@@ -6,12 +6,23 @@
   "scripts": {
     "start": "electron main",
     "pack": "electron-builder --dir",
+    "pack:all": "electron-builder -ml",
     "dist": "electron-builder"
   },
   "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "datahq",
+        "repo": "data-desktop"
+      }
+    ],
     "appId": "datahub",
     "mac": {
       "category": "public.app-category.developer-tools"
+    },
+    "linux": {
+      "target": "snap"
     }
   },
   "author": "Datopian",
@@ -28,6 +39,7 @@
     "app-root-path": "^2.0.1",
     "child-process-promise": "^2.2.1",
     "electron-is-dev": "^0.3.0",
+    "electron-updater": "^2.15.0",
     "fix-path": "^2.1.0",
     "fs-extra": "^4.0.2",
     "global-packages": "^1.0.2",

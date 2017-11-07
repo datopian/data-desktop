@@ -1,6 +1,6 @@
 {
   "name": "data-desktop",
-  "version": "0.1.2",
+  "version": "0.1.0",
   "description": "Desktop application for DataHub",
   "main": "main/index.js",
   "scripts": {
@@ -33,7 +33,8 @@
   "homepage": "https://github.com/datahq/data-desktop#readme",
   "devDependencies": {
     "electron": "^1.7.9",
-    "electron-builder": "^19.37.2"
+    "electron-builder": "^19.37.2",
+    "electron-log": "^2.2.11"
   },
   "dependencies": {
     "app-root-path": "^2.0.1",

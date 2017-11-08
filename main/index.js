@@ -11,6 +11,7 @@ const { resolve: resolvePath } = require('app-root-path')
 
 // Utils
 const updater = require('./updates')
+const notify = require('./notify')
 
 // Load the app instance from electron
 const { app } = electron
@@ -48,5 +49,11 @@ app.on('ready', async () => {
 if (!isDev) {
   app.on('ready', function()  {
     autoUpdater.checkForUpdates();
+  })
+  autoUpdater.on('update-downloaded', (info) => {
+    notify(
+      'New Data-Desktop is ready!',
+      'Quit and open the app to start using the latest version!'
+    )
   })
 }

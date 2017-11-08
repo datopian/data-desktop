@@ -36,7 +36,7 @@ const localBinaryVersion = async () => {
 }
 
 
-const updateBinary = async () => {
+const updateBinary = async (win) => {
   if (process.env.CONNECTION === 'offline') {
     return
   }
@@ -63,17 +63,24 @@ const updateBinary = async () => {
       const comparison = semVer.compare(currentLocal, currentRemote)
 
       if (comparison !== -1) {
+        // Notify user that no updates available
+        win.webContents.send('binaryUpdate', {currentLocal})
         console.log('No updates found for binary')
         return
       }
-
+      // Notify user what is current version and what will be downloaded:
+      win.webContents.send('binaryUpdate', {currentLocal, currentRemote})
       console.log('Found an update for binary! Downloading...')
     }
   } else {
+    // Notify user that binary is not found locally so it'll be installed
+    win.webContents.send('binaryUpdate', {})
     console.log('No binary exists locally. Installing the binary...')
   }
 
-  const updateFile = await binaryUtils.download(remote.url, remote.binaryName)
+  const updateFile = await binaryUtils.download(remote.url, remote.binaryName, (percantage) => {
+    win.webContents.send('progress', percantage)
+  })
 
   // Check if the binary is working before moving it into place
   try {
@@ -107,15 +114,17 @@ const startBinaryUpdates = (win) => {
   const binaryUpdateTimer = time =>
     setTimeout(async () => {
       try {
-        await updateBinary()
+        await updateBinary(win)
         if (isDev) {
           console.log('Finished binary updates... Next check in 10m')
         }
-        win.loadURL(url.format({
-          pathname: path.join(__dirname, 'pages/done.html'),
-          protocol: 'file:',
-          slashes: true
-        }))
+        setTimeout(() => {
+          win.loadURL(url.format({
+            pathname: path.join(__dirname, 'pages/done.html'),
+            protocol: 'file:',
+            slashes: true
+          }))
+        }, 3000)
         binaryUpdateTimer(ms('10m'))
       } catch (err) {
         console.log(err)

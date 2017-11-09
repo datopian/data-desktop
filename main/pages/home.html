@@ -30,7 +30,7 @@
             </p>
             <p id="message"></p>
             <p class="electron-message">
-              You can read the tutorial here while we are doing this: <a href="http://datahub.io/docs/getting-started/pushing-data" target="_blank">how to push data.</a>
+              Learn about <a href="http://datahub.io/docs/getting-started/pushing-data" target="_blank">publishing your first data</a> while we are doing this.
             </p>
           </div>
         </div>
@@ -58,7 +58,7 @@
         if (message.currentLocal) {
           if (message.currentRemote) { // Will update
             el.innerText += `\nInstalled version is ${message.currentLocal} but we have ${message.currentRemote}`
-            el.innerText += 'Please wait, we are updating the CLI tool...'
+            el.innerText += '\nPlease wait, we are updating the CLI tool...'
           } else { // Nothing to update
             el.innerText = `You are using the latest version ${message.currentLocal}!`
           }

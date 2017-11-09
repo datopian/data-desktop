@@ -31,7 +31,7 @@ app.on('window-all-closed', () => {
 app.commandLine.appendSwitch('disable-renderer-backgrounding')
 
 app.on('ready', async () => {
-  const mainWindow = new electron.BrowserWindow({})
+  const mainWindow = new electron.BrowserWindow({width: 500, height: 550, titleBarStyle: 'hidden', fullscreenable: false})
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'pages/home.html'),
     protocol: 'file:',

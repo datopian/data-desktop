@@ -5874,10 +5874,8 @@ a {
 
 .container, .container-no-top-padding {
   padding-left: 5%;
-  padding-right: 5%; }
-  @media (min-width: 768px) {
-    .container, .container-no-top-padding {
-      padding-top: 30px; } }
+  padding-right: 5%;
+  padding-top: 100px; }
 
 .inner_container {
   max-width: 960px;

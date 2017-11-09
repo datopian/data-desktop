@@ -76,9 +76,7 @@ a {
 .container {
   padding-left: 5%;
   padding-right: 5%;
-  @media (min-width: 768px) {
-    padding-top: 30px;
-  }
+  padding-top: 100px;
 }
 .inner_container {
   max-width: 960px;

@@ -105,7 +105,7 @@ const updateBinary = async (win) => {
     title: 'Updated DataHub CLI to Version ' + newVersion,
     body:
       'Feel free to try it in your terminal or click to see what has changed!',
-    url: 'https://github.com/datahq/datahub-cli/releases/tag/' + newVersion
+    url: 'https://github.com/datahq/datahub-cli/releases/tag/v' + newVersion
   })
 }
 

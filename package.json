@@ -5,7 +5,7 @@
   "main": "main/index.js",
   "scripts": {
     "start": "electron main",
-    "pack": "electron-builder --dir --mac -p always",
+    "pack": "electron-builder --dir",
     "pack:all": "electron-builder -ml",
     "dist": "electron-builder"
   },
@@ -20,6 +20,7 @@
     "appId": "datahub",
     "mac": {
       "category": "public.app-category.developer-tools",
+      "icon": "main/static/img/logo.icns",
       "target": [
         "zip",
         "dmg"

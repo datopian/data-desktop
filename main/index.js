@@ -92,6 +92,10 @@ app.on('ready', async () => {
     return app.exit()
   }
 
+  if (!windows.main.isVisible()) {
+    windows.main.once('ready-to-show', toggleActivity)
+  }
+
   // Define major event listeners for tray
   tray.on('click', toggleActivity)
   tray.on('double-click', toggleActivity)

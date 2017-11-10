@@ -70,7 +70,7 @@ exports.tutorialWindow = tray => {
 
 
 exports.mainWindow = tray => {
-  let windowHeight = 380
+  let windowHeight = 382
 
   if (isWinOS) {
     windowHeight -= 12

@@ -5817,7 +5817,7 @@ html {
 body {
   position: relative;
   min-height: 100%;
-  padding-bottom: 122px; }
+  padding-bottom: 0; }
   @media (max-width: 480px) {
     body .row {
       margin-left: 0;
@@ -5875,7 +5875,7 @@ a {
 .container, .container-no-top-padding {
   padding-left: 5%;
   padding-right: 5%;
-  padding-top: 100px; }
+  padding-top: 30px; }
 
 .inner_container {
   max-width: 960px;
@@ -5942,12 +5942,13 @@ a {
   padding-top: 10px;
   margin-bottom: 0; }
   .container .jumbotron .main-img, .container-no-top-padding .jumbotron .main-img {
-    width: 70px;
-    height: 70px;
+    width: 40px;
+    height: 40px;
     margin: auto; }
   .container .jumbotron h1, .container-no-top-padding .jumbotron h1 {
     font-weight: 200;
-    margin-bottom: 30px; }
+    margin-bottom: 30px;
+    font-size: 24px; }
   .container .jumbotron h1.main-title, .container-no-top-padding .jumbotron h1.main-title {
     margin: 30px 0 20px; }
   .container .jumbotron .message, .container-no-top-padding .jumbotron .message {
@@ -6111,7 +6112,7 @@ h2.section-title {
   margin-bottom: 10px !important; }
 
 p.electron-message {
-  font-size: 14px;
+  font-size: 12px;
   margin-top: 20px; }
 
 /*# sourceMappingURL=app.css.map */

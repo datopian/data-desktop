@@ -107,9 +107,9 @@ if (!isDev) {
     autoUpdater.checkForUpdates();
   })
   autoUpdater.on('update-downloaded', (info) => {
-    notify(
-      'New Data-Desktop is ready!',
-      'Quit and open the app to start using the latest version!'
-    )
+    notify({
+      title: 'New Data-Desktop is ready!',
+      body: 'Quit and open the app to start using the latest version!'
+    })
   })
 }

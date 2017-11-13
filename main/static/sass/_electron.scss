@@ -2,3 +2,11 @@ p.electron-message {
   font-size: 12px;
   margin-top: 20px;
 }
+
+p#version {
+  color: $gray;
+  font-size: 9px;
+  position: fixed;
+  bottom: 0;
+  right: 20px;
+}

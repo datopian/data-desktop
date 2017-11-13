@@ -10,6 +10,7 @@ const fixPath = require('fix-path')
 const { resolve: resolvePath } = require('app-root-path')
 
 // Utils
+const { version } = require('../package')
 const windowList = require('./utils/frames/list')
 const toggleWindow = require('./utils/frames/toggle')
 const updater = require('./updates')
@@ -25,6 +26,14 @@ app.setName('Data')
 // Makes sure where inheriting the correct path
 // Within the bundled app, the path would otherwise be different
 fixPath()
+
+// Notify user when the app update is donwloaded:
+autoUpdater.on('update-downloaded', (info) => {
+  notify({
+    title: 'New Data-Desktop is ready!',
+    body: 'Quit and open the app to start using the latest version!'
+  })
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -94,22 +103,19 @@ app.on('ready', async () => {
 
   if (!windows.main.isVisible()) {
     windows.main.once('ready-to-show', toggleActivity)
+    // TODO: remove this part once about page is implemented:
+    windows.main.once('ready-to-show', () => {
+      const appVersion = isDev ? version : app.getVersion()
+      windows.main.webContents.send('version', appVersion)
+    })
   }
 
   // Define major event listeners for tray
   tray.on('click', toggleActivity)
   tray.on('double-click', toggleActivity)
-})
 
-// Check for electron app updates only if not in development:
-if (!isDev) {
-  app.on('ready', function()  {
-    autoUpdater.checkForUpdates();
-  })
-  autoUpdater.on('update-downloaded', (info) => {
-    notify({
-      title: 'New Data-Desktop is ready!',
-      body: 'Quit and open the app to start using the latest version!'
-    })
-  })
-}
+  // Check for electron app updates only if not in development:
+  if (!isDev) {
+    autoUpdater.checkForUpdates()
+  }
+})

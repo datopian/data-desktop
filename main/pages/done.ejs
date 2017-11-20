@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('head'); %>
+<body class="home">
+    <!-- Jumbotron main -->
+    <div class="container">
+      <div class="inner_container">
+        <div class="jumbotron jumbotron-primary">
+          <div class="row">
+            <div class="text-center">
+              <img src="../static/img/logo-cube.png" class="img-responsive main-img" alt="">
+              <h1 class="main-title">Data online made simple</h1>
+            </div>
+          </div>
+          <div class="text-center">
+            <i class="fa fa-check fa-3x" aria-hidden="true"></i>
+            <p class="electron-message">
+              Now you can open the terminal and start using data CLI tool!
+            </p>
+            <p class="electron-message">
+              Learn about publishing your first data <a href="http://datahub.io/docs/getting-started/pushing-data" target="_blank">in this tutorial.</a>
+            </p>
+          </div>
+        </div>
+        <p id="version"></p>
+      </div>
+    </div><!-- End of jumbotron main -->
+
+    <%- include('script'); %>
+  </body>
+</html>

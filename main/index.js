@@ -8,6 +8,7 @@ const {autoUpdater} = require('electron-updater')
 const isDev = require('electron-is-dev')
 const fixPath = require('fix-path')
 const { resolve: resolvePath } = require('app-root-path')
+const ejse = require('ejs-electron')
 
 // Utils
 const { version } = require('../package')
@@ -48,6 +49,11 @@ app.commandLine.appendSwitch('disable-renderer-backgrounding')
 // Otherwise the tray icon would randomly hide after some time
 let tray = null
 
+// Set ejs to debug mode if in dev env:
+if (isDev) {
+  ejse.options('debug', true)
+}
+
 app.on('ready', async () => {
   const onlineStatusWindow = new electron.BrowserWindow({
     width: 0,
@@ -56,7 +62,7 @@ app.on('ready', async () => {
   })
 
   onlineStatusWindow.loadURL(
-    'file://' + resolvePath('./main/static/pages/status.html')
+    'file://' + resolvePath('./main/pages/status.ejs')
   )
 
 

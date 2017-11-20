@@ -1,0 +1,35 @@
+<script>
+  const {ipcRenderer} = require('electron')
+  const Nanobar = require('nanobar')
+  const updateOnlineStatus = () => {
+    ipcRenderer.send('online-status-changed', navigator.onLine ? 'online' : 'offline')
+  }
+
+  window.addEventListener('online',  updateOnlineStatus)
+  window.addEventListener('offline',  updateOnlineStatus)
+  updateOnlineStatus()
+  const nanobar = new Nanobar()
+  ipcRenderer.on('progress', (event, message) => {
+    nanobar.go(message)
+    document.getElementById('message').innerText = message + ' %'
+  })
+
+  ipcRenderer.on('binaryUpdate', (event, message) => {
+    const el = document.getElementsByClassName('electron-message')[0]
+    if (message.currentLocal) {
+      if (message.currentRemote) { // Will update
+        el.innerText += `\nInstalled version is ${message.currentLocal} but we have ${message.currentRemote}`
+        el.innerText += '\nPlease wait, we are updating the CLI tool...'
+      } else { // Nothing to update
+        el.innerText = `You are using the latest version ${message.currentLocal}!`
+      }
+    } else { // Will install
+      el.innerText = 'Please wait, we are installing the CLI tool on this machine...'
+      document.getElementById('message').innerText = '0 %'
+    }
+  })
+
+  ipcRenderer.on('version', (event, message) => {
+    document.getElementById('version').innerText = message
+  })
+</script>

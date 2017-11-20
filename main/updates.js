@@ -120,7 +120,7 @@ const startBinaryUpdates = (win) => {
         }
         setTimeout(() => {
           win.loadURL(url.format({
-            pathname: path.join(__dirname, 'pages/done.html'),
+            pathname: path.join(__dirname, 'pages/done.ejs'),
             protocol: 'file:',
             slashes: true
           }))
@@ -129,7 +129,7 @@ const startBinaryUpdates = (win) => {
       } catch (err) {
         console.log(err)
         win.loadURL(url.format({
-          pathname: path.join(__dirname, 'pages/error.html'),
+          pathname: path.join(__dirname, 'pages/error.ejs'),
           protocol: 'file:',
           slashes: true
         }))

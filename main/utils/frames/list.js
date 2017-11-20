@@ -16,7 +16,7 @@ const isWinOS = process.platform === 'win32'
 
 const windowURL = page => {
   return url.format({
-    pathname: path.join(__dirname, `../../pages/${page}.html`),
+    pathname: path.join(__dirname, `../../pages/${page}.ejs`),
     protocol: 'file:',
     slashes: true
   })

@@ -1,5 +1,5 @@
 {
-  "name": "data-desktop",
+  "name": "Data",
   "version": "0.1.11",
   "description": "Desktop application for DataHub",
   "main": "main/index.js",

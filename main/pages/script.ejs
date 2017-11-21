@@ -1,5 +1,5 @@
 <script>
-  const {ipcRenderer} = require('electron')
+  const {ipcRenderer, shell} = require('electron')
   const Nanobar = require('nanobar')
   const updateOnlineStatus = () => {
     ipcRenderer.send('online-status-changed', navigator.onLine ? 'online' : 'offline')
@@ -32,4 +32,10 @@
   ipcRenderer.on('version', (event, message) => {
     document.getElementById('version').innerText = message
   })
+
+  //open links externally by default
+  function openInBrowser(url) {
+    event.preventDefault();
+    shell.openExternal(url);
+  }
 </script>

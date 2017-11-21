@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('head'); %>
+  <body class="showcase">
+    <!-- title and owner info -->
+    <div class="container">
+      <div class="inner_container">
+        <div class="showcase-page-header">
+          <h1>
+            <%= dataset.title %>
+          </h1>
+          <p class="publisher">
+            <img src="https://www.gravatar.com/avatar/emailHash?d=https%3A%2F%2Ftesting.datahub.io%2Fstatic%2Fimg%2Flogo-cube03.png" class="img-responsive img-circle avatar" />
+            <a href="#">Your username</a>
+          </p>
+        </div>
+      </div>
+    </div><!-- end of title and owner info -->
+
+    <div class="container-no-top-padding">
+      <div class="inner_container">
+        <div class="dataset show">
+          <!-- info about data package -->
+          <div>
+            <table class="table info no-left-padding">
+              <thead>
+                <tr>
+                  <th>Files</th>
+                  <th>Size</th>
+                  <th>Format</th>
+                  <th>Created</th>
+                  <th>Updated</th>
+                  <th>License</th>
+                  <th>Source</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-xs-1"><%= dataset.resources.length %></td>
+                  <td class="col-xs-1">...</td>
+                  <td class="col-xs-2 format-list">
+                    ...
+                  </td>
+                  <td class="col-xs-2">...</td>
+                  <td class="col-xs-2">...</td>
+                  <td class="col-xs-2">
+                    <% if (dataset.licenses) { %>
+                      <% dataset.licenses.forEach(function(item) { %>
+                      <i class="fa fa-gavel"></i>
+                      <% if (item.path) { %>
+                        <a href="<%= item.path %>" title="<%= item.title %>"><%= item.name %></a>
+                      <% } else { %>
+                        <%= item.name %>
+                      <% } %>
+                      <% }) %>
+                    <% } else if (dataset.license) { %>
+                      <i class="fa fa-gavel"></i> <%= dataset.license %>
+                    <% } %>
+                  </td>
+                  <td class="col-xs-2">
+                    <% if (dataset.sources) { %>
+                      <% dataset.sources.forEach(function(item) { %>
+                        <i class="fa fa-external-link-square"></i>
+                        <% if (item.path) { %>
+                        <a href="<%= item.path %>" title="Uses data from <%= item.title %>" target="_blank">
+                          <%= item.title %>
+                        </a>
+                        <% } else { %>
+                         <%= item.title %>
+                        <% } %>
+                      <% }) %>
+                    <% } %>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+
+          </div>
+
+          <!-- short readme -->
+          <div class="readme-snippet readable-width">Short version of the README... <a href="#readme" onclick="scrollDown(this)">read more</a></div>
+
+          <!-- download button -->
+          <a href="#data" class="btn btn-lg btn-primary" onclick="scrollDown(this)">Download</a>
+
+          <!-- views -->
+          <div class="react-me part" data-type="data-views" id="next-section"></div>
+
+          <!-- data files (downloads) table -->
+          <h2 class="section-title" id="data">Data Files</h2>
+          <div class="resource-listing part">
+            <table class="table table-condensed table-striped resource-listing">
+              <thead>
+                <th class="col-xs-2">File</th>
+                <th class="col-xs-2">Description</th>
+                <th class="col-xs-1">Size</th>
+                <th class="col-xs-2">Last changed</th>
+                <th>Download</th>
+                <th>Other formats</th>
+              </thead>
+              <tbody>
+              <% dataset.resources.forEach(function(resource) { %>
+                <tr>
+                  <td class="col-xs-2">
+                    <i class="fa fa-file-text-o"></i> <a href="#resource-<%= resource.name %>" onclick="scrollDown(this)"><%=resource.name%></a> [<%=resource.format%>]
+                  </td>
+                  <td class="col-xs-3">
+                    <%= resource.title || resource.description %>
+                  </td>
+                  <td class="col-xs-1">
+                    ...
+                  </td>
+                  <td class="col-xs-1">
+                    ...
+                  </td>
+                  <td class="download truncate col-xs-3">
+                    <a href="#">
+                      <%= resource.name %> [<%= resource.format %>]
+                    </a>
+                  </td>
+                  <td class="download truncate col-xs-2">
+                    ...
+                  </td>
+                </tr>
+              <% }) %>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- preview + field information -->
+          <% dataset.resources.forEach(function(resource, index) { %>
+            <div class="resource-info part">
+              <h2 id="resource-<%=resource.name%>" class="section-title">
+                <%=resource.name%>
+              </h2>
+              <div id="resource-<%= index %>" class="react-me tables"
+                   data-type="resource-preview" data-resource="<%= index %>"></div>
+              <% if (resource.format === "csv") { %>
+               <h2 class="section-title">Field information</h2>
+               <table class="table table-bordered table-striped resource-summary">
+                 <thead>
+                   <tr>
+                     <th>Field Name</th>
+                     <th>Order</th>
+                     <th>Type (Format)</th>
+                     <th>Description</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                   <% resource.schema.fields.forEach(function(field, index) { %>
+                     <tr>
+                       <th><%=field.name%></th>
+                       <td><%=index%></td>
+                       <td class="type type-<%=field.type%>"><%=field.type%> <% if (field.format) { %>(<%=field.format%>) <% } %></td>
+                       <td><%=field.description%></td>
+                     </tr>
+                   <% }) %>
+                 </tbody>
+               </table>
+             <% } %>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+
+    <!-- readme section -->
+    <div class="section-gray">
+      <div class="container">
+        <div class="inner_container">
+          <div class="dataset show">
+            <h2 id="readme" class="section-title">Read me</h2>
+            <div class="readme part readable-width">Full readme text here...</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- end of readme section -->
+
+
+    <!-- pass DP_ID to front-end -->
+    <script type="text/javascript">
+      var DP_ID = JSON.parse('<%= dpId %>');
+      console.log(DP_ID)
+    </script>
+
+    <!-- <link rel="stylesheet" media="screen" href="/static/dpr-js/dist/main.css">
+    <script type="text/javascript" src="/static/dpr-js/dist/bundle.js"></script> -->
+  </body>
+</html>

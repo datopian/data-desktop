@@ -1,0 +1,3 @@
+[submodule "main/static/dpr-js"]
+	path = main/static/dpr-js
+	url = https://github.com/datahq/frontend-showcase-js.git

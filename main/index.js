@@ -15,8 +15,10 @@ const { version } = require('../package')
 const windowList = require('./utils/frames/list')
 const toggleWindow = require('./utils/frames/toggle')
 const updater = require('./updates')
+const showcase = require('./utils/showcase')
 const notify = require('./notify')
 const handleException = require('./utils/exception')
+const { error: showError } = require('./dialogs')
 
 // Load the app instance from electron
 const { app } = electron
@@ -41,6 +43,17 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+const filesDropped = async (event, files) => {
+  event.preventDefault()
+
+  if (process.env.CONNECTION === 'offline') {
+    showError("You're offline")
+    return
+  }
+
+  await showcase(files)
+}
 
 // Chrome Command Line Switches
 app.commandLine.appendSwitch('disable-renderer-backgrounding')
@@ -117,6 +130,7 @@ app.on('ready', async () => {
   }
 
   // Define major event listeners for tray
+  tray.on('drop-files', filesDropped)
   tray.on('click', toggleActivity)
   tray.on('double-click', toggleActivity)
 

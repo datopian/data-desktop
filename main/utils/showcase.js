@@ -50,13 +50,32 @@ module.exports = async (files) => {
   if (files.length === 1) {
     const path_ = files[0]
     if (fs.lstatSync(path_).isFile()) {
+      // If it is "datapackage.json" then use it, otherwise generate one from data file:
       const pathParts = path.parse(path_)
+      let dataset
       if (pathParts.base === 'datapackage.json') {
-        showError('Sorry, currently you can drop in a single file. Data Package support is coming!')
+        dataset = await Dataset.load(path_)
+      } else {
+        dataset = await prepareDatasetFromFile(path_)
       }
-      const dataset = await prepareDatasetFromFile(path_)
+      // Add previews for CSV files:
+      dataset.descriptor.views = dataset.descriptor.views || []
+      dataset.descriptor.resources.forEach(resource => {
+        if (resource.format === 'csv') {
+          const preview = {
+            "datahub": {
+              "type": "preview"
+            },
+            "resources": [resource.name],
+            "specType": "table"
+          }
+          dataset.descriptor.views.push(preview)
+        }
+      })
+      // Set variables for rendering the showcase page:
       ejse.data('dataset', dataset.descriptor)
       ejse.data('dpId', JSON.stringify(dataset.descriptor).replace(/\\/g, '\\\\').replace(/\'/g, "\\'"))
+      // Initialize and toggle the window:
       const win = new electron.BrowserWindow({
         width: 800,
         height: 700,

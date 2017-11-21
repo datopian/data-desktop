@@ -180,11 +180,10 @@
 
     <!-- pass DP_ID to front-end -->
     <script type="text/javascript">
-      var DP_ID = JSON.parse('<%= dpId %>');
-      console.log(DP_ID)
+      var DP_ID = JSON.parse('<%- dpId %>');
     </script>
 
-    <!-- <link rel="stylesheet" media="screen" href="/static/dpr-js/dist/main.css">
-    <script type="text/javascript" src="/static/dpr-js/dist/bundle.js"></script> -->
+    <link rel="stylesheet" media="screen" href="../static/dpr-js/dist/main.css">
+    <script type="text/javascript" src="../static/dpr-js/dist/bundle.js"></script>
   </body>
 </html>

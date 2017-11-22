@@ -90,7 +90,7 @@ module.exports = async (files) => {
       ejse.data('dpId', JSON.stringify(dataset.descriptor).replace(/\\/g, '\\\\').replace(/\'/g, "\\'"))
       // Initialize and toggle the window:
       const win = new electron.BrowserWindow({
-        width: 800,
+        width: 1000,
         height: 700,
         title: 'Welcome to DataHub',
         resizable: false,

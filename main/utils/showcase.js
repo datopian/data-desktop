@@ -8,6 +8,7 @@ const fs = require('fs-extra')
 const {Dataset, File} = require('data.js')
 const hri = require('human-readable-ids').hri
 const { resolve: resolvePath } = require('app-root-path')
+const toArray = require('stream-to-array')
 
 // Utils
 const { error: showError } = require('../dialogs')
@@ -72,6 +73,18 @@ module.exports = async (files) => {
           dataset.descriptor.views.push(preview)
         }
       })
+      // Add base path:
+      dataset.descriptor.path = path_.replace('/datapackage.json', '')
+      // Make resources with inlined data so we don't need `fs` module in browser:
+      for (let i = 0; i < dataset.resources.length; i++) {
+        if (dataset.resources[i].descriptor.format === 'csv') {
+          const rows = await dataset.resources[i].rows()
+          dataset.descriptor.resources[i].data = await toArray(rows)
+        } else {
+          const buffer = await dataset.resources[i].buffer
+          dataset.descriptor.resources[i].data = JSON.parse(buffer.toString())
+        }
+      }
       // Set variables for rendering the showcase page:
       ejse.data('dataset', dataset.descriptor)
       ejse.data('dpId', JSON.stringify(dataset.descriptor).replace(/\\/g, '\\\\').replace(/\'/g, "\\'"))

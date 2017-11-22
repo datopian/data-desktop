@@ -11,7 +11,7 @@
           </h1>
           <p class="publisher">
             <img src="https://www.gravatar.com/avatar/emailHash?d=https%3A%2F%2Ftesting.datahub.io%2Fstatic%2Fimg%2Flogo-cube03.png" class="img-responsive img-circle avatar" />
-            <a href="#">Your username</a>
+            <a href="#" onclick="return false;">Your username</a>
           </p>
         </div>
       </div>
@@ -79,7 +79,16 @@
           </div>
 
           <!-- short readme -->
-          <div class="readme-snippet readable-width">Short version of the README... <a href="#readme" onclick="scrollDown(this)">read more</a></div>
+          <div class="readme-snippet readable-width">
+            <% if (dataset.readme) { %>
+              <%- dataset.readmeSnippet %>
+              <a href="#readme" onclick="scrollDown(this)">read more</a>
+            <% } else { %>
+              <p>
+                No readme is provided.
+              </p>
+            <% } %>
+          </div>
 
           <!-- download button -->
           <a href="#data" class="btn btn-lg btn-primary" onclick="scrollDown(this)">Download</a>
@@ -115,7 +124,7 @@
                     ...
                   </td>
                   <td class="download truncate col-xs-3">
-                    <a href="#">
+                    <a href="#" onclick="return false;">
                       <%= resource.name %> [<%= resource.format %>]
                     </a>
                   </td>
@@ -171,7 +180,7 @@
         <div class="inner_container">
           <div class="dataset show">
             <h2 id="readme" class="section-title">Read me</h2>
-            <div class="readme part readable-width">Full readme text here...</div>
+            <div class="readme part readable-width"><%- dataset.readmeHtml %></div>
           </div>
         </div>
       </div>
@@ -182,7 +191,7 @@
     <script type="text/javascript">
       var DP_ID = JSON.parse('<%- dpId %>');
     </script>
-
+    <%- include('script'); %>
     <link rel="stylesheet" media="screen" href="../static/dpr-js/dist/main.css">
     <script type="text/javascript" src="../static/dpr-js/dist/bundle.js"></script>
   </body>

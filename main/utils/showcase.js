@@ -13,6 +13,7 @@ const toArray = require('stream-to-array')
 // Utils
 const { error: showError } = require('../dialogs')
 const toggleWindow = require('./frames/toggle')
+const {dpInReadme, textToMarkdown, makeSmallReadme} = require('./markdown')
 
 
 const prepareDatasetFromFile = async filePath => {
@@ -59,6 +60,8 @@ module.exports = async (files) => {
       } else {
         dataset = await prepareDatasetFromFile(path_)
       }
+      // Making a copy of dp to use in the compiled README
+      const initialDp = Object.assign({}, dataset.descriptor)
       // Add previews for CSV files:
       dataset.descriptor.views = dataset.descriptor.views || []
       dataset.descriptor.resources.forEach(resource => {
@@ -84,6 +87,12 @@ module.exports = async (files) => {
           const buffer = await dataset.resources[i].buffer
           dataset.descriptor.resources[i].data = JSON.parse(buffer.toString())
         }
+      }
+      // If readme exists then convert md to html:
+      if (dataset.descriptor.readme) {
+        const readmeCompiled = dpInReadme(dataset.descriptor.readme, initialDp)
+        dataset.descriptor.readmeHtml = textToMarkdown(readmeCompiled)
+        dataset.descriptor.readmeSnippet = makeSmallReadme(dataset.descriptor.readme)
       }
       // Set variables for rendering the showcase page:
       ejse.data('dataset', dataset.descriptor)

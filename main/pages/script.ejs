@@ -40,4 +40,13 @@
       shell.openExternal(event.target.href)
     }
   })
+
+  // Toggle window:
+  function toggleWindow() {
+    ipcRenderer.send('toggle-window')
+  }
+  // Login:
+  function authenticate() {
+    ipcRenderer.send('login-request')
+  }
 </script>

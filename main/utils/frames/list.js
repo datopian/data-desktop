@@ -69,6 +69,71 @@ exports.tutorialWindow = tray => {
 }
 
 
+exports.loginWindow = tray => {
+  let windowHeight = 382
+
+  if (isWinOS) {
+    windowHeight -= 12
+  }
+
+  const win = new electron.BrowserWindow({
+    width: 330,
+    height: windowHeight,
+    title: 'Now',
+    resizable: false,
+    show: false,
+    fullscreenable: false,
+    maximizable: false,
+    minimizable: false,
+    transparent: true,
+    frame: false,
+    movable: false,
+    webPreferences: {
+      backgroundThrottling: false,
+      devTools: true
+    }
+  })
+
+  positionWindow(tray, win)
+
+  win.loadURL(windowURL('login'))
+  attachTrayState(win, tray)
+
+  // Hide window if it's not focused anymore
+  // This can only happen if the dev tools are not open
+  // Otherwise, we won't be able to debug the renderer
+  win.on('blur', () => {
+    if (win.webContents.isDevToolsOpened()) {
+      return
+    }
+
+    if (!isWinOS) {
+      win.close()
+      return
+    }
+
+    const { screen } = electron
+    const cursor = screen.getCursorScreenPoint()
+    const trayBounds = global.tray.getBounds()
+
+    const xAfter = cursor.x <= trayBounds.x + trayBounds.width
+    const x = cursor.x >= trayBounds.x && xAfter
+    const yAfter = trayBounds.y + trayBounds.height
+    const y = cursor.y >= trayBounds.y && cursor.y <= yAfter
+
+    // Don't close the window on click on the tray icon
+    // Because that will already toogle the window
+    if (x && y) {
+      return
+    }
+
+    win.close()
+  })
+
+  return win
+}
+
+
 exports.mainWindow = tray => {
   let windowHeight = 382
 

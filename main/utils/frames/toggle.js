@@ -4,6 +4,7 @@ module.exports = (event, window, tray) => {
   const isVisible = window.isVisible()
   const isWin = process.platform === 'win32'
   const isMain = global.windows && window === global.windows.main
+  const isLogin = global.windows && window === global.windows.login
 
   if (event) {
     // Don't open the menu
@@ -25,7 +26,7 @@ module.exports = (event, window, tray) => {
     window.close()
   } else {
     // Position main window correctly under the tray icon
-    if (isMain) {
+    if (isMain || isLogin) {
       positionWindow(tray, window)
     }
 

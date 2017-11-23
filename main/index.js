@@ -19,6 +19,7 @@ const showcase = require('./utils/showcase')
 const notify = require('./notify')
 const handleException = require('./utils/exception')
 const { error: showError } = require('./dialogs')
+const login = require('./utils/login')
 
 // Load the app instance from electron
 const { app } = electron
@@ -94,12 +95,13 @@ app.on('ready', async () => {
   global.tray = tray
 
   // Extract each window out of the list
-  const { mainWindow, tutorialWindow } = windowList
+  const { mainWindow, tutorialWindow, loginWindow } = windowList
 
   // And then put it back into a list :D
   const windows = {
     main: mainWindow(tray),
-    tutorial: tutorialWindow(tray)
+    tutorial: tutorialWindow(tray),
+    login: loginWindow(tray)
   }
 
   updater(windows.main)
@@ -138,4 +140,15 @@ app.on('ready', async () => {
   if (!isDev) {
     autoUpdater.checkForUpdates()
   }
+
+  electron.ipcMain.on('toggle-window', (event) => {
+    toggleWindow(null, windows.login, tray)
+  })
+
+  // Listen for login requests:
+  electron.ipcMain.on('login-request', async (event) => {
+    if (isDev) console.log('login in now...')
+    await login()
+    if (isDev) console.log('login done')
+  })
 })

@@ -42,6 +42,7 @@
     "app-root-path": "^2.0.1",
     "child-process-promise": "^2.2.1",
     "data.js": "^0.9.10",
+    "datahub-client": "^0.1.0",
     "ejs-electron": "^2.0.1",
     "electron-is-dev": "^0.3.0",
     "electron-updater": "^2.16.1",

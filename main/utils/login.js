@@ -1,5 +1,5 @@
-const {config} = require('datahub')
-const {login, authenticate} = require('datahub')
+const {config} = require('datahub-client')
+const {login, authenticate} = require('datahub-client')
 
 const { error: showError } = require('../dialogs')
 

@@ -46,6 +46,7 @@ app.on('window-all-closed', () => {
   }
 })
 
+// Function for handling dropped files:
 const filesDropped = async (event, files) => {
   event.preventDefault()
 
@@ -142,10 +143,6 @@ app.on('ready', async () => {
     autoUpdater.checkForUpdates()
   }
 
-  electron.ipcMain.on('toggle-window', (event) => {
-    toggleWindow(null, windows.login, tray)
-  })
-
   // Listen for login requests:
   electron.ipcMain.on('login-request', async (event) => {
     if (isDev) console.log('login in now...')
@@ -156,9 +153,14 @@ app.on('ready', async () => {
   // Listen for push requests:
   electron.ipcMain.on('push-request', async (event, originalPath) => {
     if (isDev) console.log('commencing push...')
-    const url_ = await push(originalPath)
-    if (isDev) console.log('push done! URL: ' + url_)
-    // Send back url to renderer:
-    event.sender.send('published-url', url_)
+    const result = await push(originalPath)
+
+    if (result.loggedIn) {
+      if (isDev) console.log('push done! URL: ' + result.url)
+      // Send back url to renderer:
+      event.sender.send('published-url', result.url)
+    } else { // If not logged in then open login window:
+      toggleWindow(null, windows.login, tray)
+    }
   })
 })

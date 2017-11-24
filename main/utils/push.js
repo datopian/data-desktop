@@ -10,6 +10,11 @@ const { error: showError } = require('../dialogs')
 
 
 module.exports = async (path_) => {
+  const returnObj = {
+    loggedIn: null,
+    url: null,
+    errors: []
+  }
   // First check if user is authenticated
   const apiUrl = config.get('api')
   const token = config.get('token')
@@ -21,8 +26,11 @@ module.exports = async (path_) => {
     return
   }
   if (!out.authenticated) {
-    showError('You need to login in order to push your data. Please, use `data login` command.')
-    return
+    showError('You need to login in order to push your data.')
+    returnObj.loggedIn = false
+    return returnObj
+  } else {
+    returnObj.loggedIn = true
   }
 
   try {
@@ -30,7 +38,7 @@ module.exports = async (path_) => {
     if (isDataset(path_)) {
       if (isUrl(path_)) {
         showError('Error: You can push only local datasets.')
-        return
+        return returnObj
       }
       dataset = await Dataset.load(path_)
     } else {
@@ -51,11 +59,11 @@ module.exports = async (path_) => {
     }
     await datahub.push(dataset, options)
 
-    const url = urljoin(config.get('domain'), datahubConfigs.owner, dataset.descriptor.name)
-    return url
+    returnObj.url = urljoin(config.get('domain'), datahubConfigs.owner, dataset.descriptor.name)
+    return returnObj
   } catch (err) {
     showError(err)
     console.log('> [debug]\n' + err.stack)
-    return
+    return returnObj
   }
 }

@@ -53,7 +53,13 @@
 
   // Listen for published url:
   ipcRenderer.on('published-url', (event, url) => {
-    const element = document.getElementById('actions-and-info-container')
-    element.innerHTML = `<p>Your dataset is now published at ${url}</p>`
+    const container = document.getElementById('actions-and-info-container')
+    const button = container.getElementsByTagName('button')[0]
+    button.innerText = 'Open in my default browser!'
+    button.onclick = () => {
+      shell.openExternal(url)
+    }
+    const message = container.getElementsByTagName('span')[0]
+    message.innerText = 'It is online now! Why not to check it out?'
   })
 </script>

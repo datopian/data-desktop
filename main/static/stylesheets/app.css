@@ -6118,6 +6118,16 @@ h2.section-title {
       margin-bottom: 3em; } }
   .showcase a.btn {
     padding: 8px 25px; }
+  .showcase .input-group-addon {
+    text-align: left;
+    background-color: white;
+    color: #000; }
+  .showcase .input-group-addon, .showcase .input-group-btn {
+    white-space: normal;
+    width: 0; }
+  .showcase .input-group-btn button {
+    padding-left: 50px;
+    padding-right: 50px; }
 
 h1 span {
   vertical-align: middle !important;

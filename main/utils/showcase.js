@@ -8,6 +8,7 @@ const fs = require('fs-extra')
 const {Dataset} = require('data.js')
 const { resolve: resolvePath } = require('app-root-path')
 const toArray = require('stream-to-array')
+const {config} = require('datahub-client')
 
 // Utils
 const prepareDatasetFromFile = require('./prepare')
@@ -66,6 +67,7 @@ module.exports = async (files) => {
       ejse.data('dataset', dataset.descriptor)
       ejse.data('dpId', JSON.stringify(dataset.descriptor).replace(/\\/g, '\\\\').replace(/\'/g, "\\'"))
       ejse.data('originalPath', path_)
+      ejse.data('owner', config.get('profile').username)
       // Initialize and toggle the window:
       const win = new electron.BrowserWindow({
         width: 1000,
@@ -73,11 +75,9 @@ module.exports = async (files) => {
         title: 'Welcome to DataHub',
         resizable: false,
         center: true,
-        frame: false,
         show: false,
         fullscreenable: false,
         maximizable: false,
-        titleBarStyle: 'hidden-inset',
         webPreferences: {
           backgroundThrottling: false,
           devTools: true

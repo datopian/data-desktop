@@ -49,4 +49,15 @@
   function authenticate() {
     ipcRenderer.send('login-request')
   }
+
+  // Push:
+  function push(originalPath) {
+    ipcRenderer.send('push-request', originalPath)
+  }
+
+  // Listen for published url:
+  ipcRenderer.on('published-url', (event, url) => {
+    const element = document.getElementById('actions-and-info-container')
+    element.innerHTML = `<p>Your dataset is now published at ${url}</p>`
+  })
 </script>

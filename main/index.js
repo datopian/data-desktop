@@ -20,6 +20,7 @@ const notify = require('./notify')
 const handleException = require('./utils/exception')
 const { error: showError } = require('./dialogs')
 const login = require('./utils/login')
+const push = require('./utils/push')
 
 // Load the app instance from electron
 const { app } = electron
@@ -64,9 +65,9 @@ app.commandLine.appendSwitch('disable-renderer-backgrounding')
 let tray = null
 
 // Set ejs to debug mode if in dev env:
-if (isDev) {
-  ejse.options('debug', true)
-}
+// if (isDev) {
+//   ejse.options('debug', true)
+// }
 
 app.on('ready', async () => {
   const onlineStatusWindow = new electron.BrowserWindow({
@@ -150,5 +151,14 @@ app.on('ready', async () => {
     if (isDev) console.log('login in now...')
     await login()
     if (isDev) console.log('login done')
+  })
+
+  // Listen for push requests:
+  electron.ipcMain.on('push-request', async (event, originalPath) => {
+    if (isDev) console.log('commencing push...')
+    const url_ = await push(originalPath)
+    if (isDev) console.log('push done! URL: ' + url_)
+    // Send back url to renderer:
+    event.sender.send('published-url', url_)
   })
 })

@@ -4,7 +4,10 @@
   <body class="showcase">
     <div class="container">
       <div class="inner_container">
-        <a href="#" class="btn btn-lg btn-primary" onclick="toggleWindow()">Login</a>
+        <div id="actions-and-info-container">
+          <a href="#" class="btn btn-lg btn-primary" onclick="toggleWindow()">Login</a>
+          <a href="#" class="btn btn-lg btn-primary" onclick="push('<%= originalPath %>')">Push</a>
+        </div>
       </div>
     </div>
     <!-- title and owner info -->

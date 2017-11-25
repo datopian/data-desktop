@@ -13,19 +13,20 @@ module.exports = async () => {
     out = await authenticate(apiUrl, token)
   } catch (err) {
     showError(err)
-    return
+    return {success: false}
   }
 
   if (out.authenticated) {
     showError('You are already logged in.')
-    return
+    return {success: true}
   }
 
   const authUrl = out.providers.github.url
   try {
     await login(apiUrl, authUrl)
+    return {success: true}
   } catch (err) {
     showError(err)
-    return
+    return {success: false}
   }
 }

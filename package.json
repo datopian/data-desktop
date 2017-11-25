@@ -1,12 +1,12 @@
 {
   "name": "Data",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Desktop application for DataHub",
   "main": "main/index.js",
   "scripts": {
     "start": "electron main",
-    "pack": "electron-builder --dir",
-    "pack:all": "electron-builder -ml",
+    "pack": "build",
+    "pack:all": "build -ml",
     "dist": "electron-builder",
     "release": "build -p always"
   },
@@ -42,7 +42,7 @@
     "app-root-path": "^2.0.1",
     "child-process-promise": "^2.2.1",
     "data.js": "^0.9.10",
-    "datahub-client": "^0.1.0",
+    "datahub-client": "^0.1.1",
     "ejs-electron": "^2.0.1",
     "electron-is-dev": "^0.3.0",
     "electron-updater": "^2.16.1",
@@ -70,6 +70,7 @@
     "sudo-prompt": "^7.1.1",
     "tmp-promise": "^1.0.3",
     "trim": "0.0.1",
+    "url-join": "^2.0.2",
     "which-promise": "^1.0.0",
     "winreg": "^1.2.4"
   }

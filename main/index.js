@@ -9,6 +9,7 @@ const isDev = require('electron-is-dev')
 const fixPath = require('fix-path')
 const { resolve: resolvePath } = require('app-root-path')
 const ejse = require('ejs-electron')
+const {config} = require('datahub-client')
 
 // Utils
 const { version } = require('../package')
@@ -45,18 +46,6 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
-
-// Function for handling dropped files:
-const filesDropped = async (event, files) => {
-  event.preventDefault()
-
-  if (process.env.CONNECTION === 'offline') {
-    showError("You're offline")
-    return
-  }
-
-  await showcase(files)
-}
 
 // Chrome Command Line Switches
 app.commandLine.appendSwitch('disable-renderer-backgrounding')
@@ -133,6 +122,25 @@ app.on('ready', async () => {
     })
   }
 
+  // Function for handling dropped files:
+  const filesDropped = async (event, files) => {
+    event.preventDefault()
+
+    if (process.env.CONNECTION === 'offline') {
+      showError("You're offline")
+      return
+    }
+
+    // Check if user is logged in. If so proceed, if not require to login:
+    config.setup()
+    if (!config.get('token')) {
+      toggleWindow(null, windows.login, tray)
+      return
+    }
+
+    await showcase(files)
+  }
+
   // Define major event listeners for tray
   tray.on('drop-files', filesDropped)
   tray.on('click', toggleActivity)
@@ -143,11 +151,16 @@ app.on('ready', async () => {
     autoUpdater.checkForUpdates()
   }
 
+  // Listen which window to toggle from renderer:
+  electron.ipcMain.on('toggle-window', (event, win) => {
+    toggleWindow(null, windows[win], tray)
+  })
+
   // Listen for login requests:
   electron.ipcMain.on('login-request', async (event) => {
     if (isDev) console.log('login in now...')
-    await login()
-    if (isDev) console.log('login done')
+    const result = await login()
+    if (isDev) console.log('Login success: ' + result.success)
   })
 
   // Listen for push requests:

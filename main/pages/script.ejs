@@ -41,6 +41,11 @@
     }
   })
 
+  // Toggle window:
+  function toggleWindow(win) {
+    ipcRenderer.send('toggle-window', win)
+  }
+
   // Login:
   function authenticate() {
     ipcRenderer.send('login-request')

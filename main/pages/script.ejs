@@ -56,6 +56,7 @@
     const container = document.getElementById('actions-and-info-container')
     const input = container.getElementsByTagName('input')[0]
     const newName = input.value
+    const newTitle = document.getElementById('newTitle').value
     const parent = container.getElementsByClassName('input-group')[0]
     parent.removeChild(input)
 
@@ -70,7 +71,7 @@
     const infoMessage = container.getElementsByClassName('info')[0]
     container.removeChild(infoMessage)
 
-    ipcRenderer.send('push-request', originalPath, {newName})
+    ipcRenderer.send('push-request', originalPath, {newName, newTitle})
   }
 
   // Listen for published url:

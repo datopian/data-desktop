@@ -13,7 +13,7 @@
             </span>
           </div>
           <p class="info">
-            Edit this if you want to publish to a different name or replace an existing dataset
+            Edit this if you want to publish to a different name or replace an existing dataset.
           </p>
         </div>
       </div>
@@ -24,8 +24,11 @@
       <div class="inner_container">
         <div class="showcase-page-header">
           <h1>
-            <%= dataset.title %>
+            <input type="text" value="<%= dataset.title %>" id="newTitle" style="width:100%">
           </h1>
+          <p class="info">
+            Edit this if you want to change title for this dataset.
+          </p>
           <p class="publisher">
             <img src="https://www.gravatar.com/avatar/emailHash?d=https%3A%2F%2Ftesting.datahub.io%2Fstatic%2Fimg%2Flogo-cube03.png" class="img-responsive img-circle avatar" />
             <a href="#" onclick="return false;">Your username</a>

@@ -6133,9 +6133,19 @@ h2.section-title {
     color: #ff7900;
     font-weight: 100; }
 
-h1 span {
-  vertical-align: middle !important;
-  font-size: 14px !important; }
+h1 {
+  margin-bottom: 0; }
+  h1 input {
+    width: 100%;
+    border: 0;
+    padding-bottom: 2px;
+    border-bottom: 1px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial; }
+  h1 span {
+    vertical-align: middle !important;
+    font-size: 14px !important; }
 
 blockquote {
   font-size: inherit; }
@@ -6199,7 +6209,7 @@ h2.publisher {
   font-size: 1.8em; }
 
 .publisher {
-  margin: 0 0 20px 0; }
+  margin: 20px 0 20px 0; }
 
 .dataset .main-img {
   padding: 10%; }

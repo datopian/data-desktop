@@ -10,7 +10,7 @@ const { error: showError } = require('../dialogs')
 const notify = require('../notify')
 
 
-module.exports = async (path_, {newName}={}) => {
+module.exports = async (path_, {newName, newTitle}={}) => {
   const returnObj = {
     loggedIn: null,
     url: null,
@@ -55,6 +55,10 @@ module.exports = async (path_, {newName}={}) => {
     // Set new name for this dataset if user provided one:
     if (newName) {
       dataset.descriptor.name = newName
+    }
+    // Also set new title for this dataset:
+    if (newTitle) {
+      dataset.descriptor.title = newTitle
     }
 
     const datahubConfigs = {

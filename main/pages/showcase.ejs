@@ -6,11 +6,15 @@
       <div class="inner_container">
         <div id="actions-and-info-container">
           <div class="input-group">
-            <span class="input-group-addon" id="basic-addon3">Publish at <ins>/<%= owner %>/<%= dataset.name %></ins> </span>
+            <span class="input-group-addon" id="basic-addon3">Publish at <ins class="path">/<%= owner %>/</ins></span>
+            <input type="text" class="form-control path" value="<%= dataset.name %>" id="newName" aria-describedby="basic-addon3">
             <span class="input-group-btn">
               <button class="btn btn-primary" type="button" onclick="push('<%= originalPath %>')">Go!</button>
             </span>
           </div>
+          <p class="info">
+            Edit this if you want to publish to a different name or replace an existing dataset
+          </p>
         </div>
       </div>
     </div>
@@ -203,6 +207,10 @@
     <!-- pass DP_ID to front-end -->
     <script type="text/javascript">
       var DP_ID = JSON.parse('<%- dpId %>');
+
+      // Set margin-left for info message under editable dataset name:
+      const spanWidth = document.getElementById('basic-addon3').offsetWidth
+      document.getElementsByClassName('info')[0].style.marginLeft = spanWidth + 13 + 'px';
     </script>
     <%- include('script'); %>
     <link rel="stylesheet" media="screen" href="../static/dpr-js/dist/main.css">

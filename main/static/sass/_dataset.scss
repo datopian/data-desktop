@@ -13,15 +13,23 @@
     background-color: white;
     color: $black;
   }
-  .input-group-addon, .input-group-btn {
-    white-space: normal;
-    width: 0;
-  }
+
   .input-group-btn {
     button {
       padding-left: 50px;
       padding-right: 50px;
     }
+  }
+
+  p.info {
+    color: $gray;
+    font-size: 10px;
+    margin: 0;
+  }
+
+  .path {
+    color: $brand-warning;
+    font-weight: 100;
   }
 }
 h1 {

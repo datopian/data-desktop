@@ -53,7 +53,8 @@
 
   // Push:
   function push(originalPath) {
-    ipcRenderer.send('push-request', originalPath)
+    const newName = document.getElementById('newName').value
+    ipcRenderer.send('push-request', originalPath, {newName})
   }
 
   // Listen for published url:

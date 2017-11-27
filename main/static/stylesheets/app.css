@@ -6122,12 +6122,16 @@ h2.section-title {
     text-align: left;
     background-color: white;
     color: #000; }
-  .showcase .input-group-addon, .showcase .input-group-btn {
-    white-space: normal;
-    width: 0; }
   .showcase .input-group-btn button {
     padding-left: 50px;
     padding-right: 50px; }
+  .showcase p.info {
+    color: #757575;
+    font-size: 10px;
+    margin: 0; }
+  .showcase .path {
+    color: #ff7900;
+    font-weight: 100; }
 
 h1 span {
   vertical-align: middle !important;

@@ -53,7 +53,23 @@
 
   // Push:
   function push(originalPath) {
-    const newName = document.getElementById('newName').value
+    const container = document.getElementById('actions-and-info-container')
+    const input = container.getElementsByTagName('input')[0]
+    const newName = input.value
+    const parent = container.getElementsByClassName('input-group')[0]
+    parent.removeChild(input)
+
+    const button = container.getElementsByTagName('button')[0]
+    button.innerHTML = 'In progress <i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="spinner"></i>'
+    button.disabled = true
+
+    const message = container.getElementsByTagName('span')[0]
+    message.innerText = message.innerText.replace('Publish at', 'Publishing to')
+    message.innerText += newName
+
+    const infoMessage = container.getElementsByClassName('info')[0]
+    container.removeChild(infoMessage)
+
     ipcRenderer.send('push-request', originalPath, {newName})
   }
 
@@ -62,15 +78,11 @@
     const container = document.getElementById('actions-and-info-container')
     const button = container.getElementsByTagName('button')[0]
     button.innerText = 'Open in my default browser!'
+    button.disabled = false
     button.onclick = () => {
       shell.openExternal(url)
     }
     const message = container.getElementsByTagName('span')[0]
     message.innerText = 'It is online now! Why not to check it out?'
-    const input = container.getElementsByTagName('input')[0]
-    const parent = container.getElementsByClassName('input-group')[0]
-    parent.removeChild(input)
-    const infoMessage = container.getElementsByClassName('info')[0]
-    container.removeChild(infoMessage)
   })
 </script>

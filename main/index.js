@@ -164,9 +164,9 @@ app.on('ready', async () => {
   })
 
   // Listen for push requests:
-  electron.ipcMain.on('push-request', async (event, originalPath) => {
+  electron.ipcMain.on('push-request', async (event, originalPath, {newName}={}) => {
     if (isDev) console.log('commencing push...')
-    const result = await push(originalPath)
+    const result = await push(originalPath, {newName})
 
     if (result.loggedIn) {
       if (isDev) console.log('push done! URL: ' + result.url)

@@ -9,7 +9,7 @@ const prepareDatasetFromFile = require('./prepare')
 const { error: showError } = require('../dialogs')
 
 
-module.exports = async (path_) => {
+module.exports = async (path_, {newName}={}) => {
   const returnObj = {
     loggedIn: null,
     url: null,
@@ -43,6 +43,11 @@ module.exports = async (path_) => {
       dataset = await Dataset.load(path_)
     } else {
       dataset = await prepareDatasetFromFile(path_)
+    }
+
+    // Set new name for this dataset if user provided one:
+    if (newName) {
+      dataset.descriptor.name = newName
     }
 
     const datahubConfigs = {

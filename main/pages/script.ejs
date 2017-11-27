@@ -67,5 +67,10 @@
     }
     const message = container.getElementsByTagName('span')[0]
     message.innerText = 'It is online now! Why not to check it out?'
+    const input = container.getElementsByTagName('input')[0]
+    const parent = container.getElementsByClassName('input-group')[0]
+    parent.removeChild(input)
+    const infoMessage = container.getElementsByClassName('info')[0]
+    container.removeChild(infoMessage)
   })
 </script>

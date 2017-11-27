@@ -7,6 +7,7 @@ const urljoin = require('url-join')
 
 const prepareDatasetFromFile = require('./prepare')
 const { error: showError } = require('../dialogs')
+const notify = require('../notify')
 
 
 module.exports = async (path_, {newName}={}) => {
@@ -32,6 +33,12 @@ module.exports = async (path_, {newName}={}) => {
   } else {
     returnObj.loggedIn = true
   }
+
+  // Show notification that push has started:
+  notify({
+    title: 'Publishing your dataset',
+    body: 'We will notify you once publishing is done.'
+  })
 
   try {
     let dataset
@@ -65,6 +72,11 @@ module.exports = async (path_, {newName}={}) => {
     await datahub.push(dataset, options)
 
     returnObj.url = urljoin(config.get('domain'), datahubConfigs.owner, dataset.descriptor.name)
+    notify({
+      title: 'Your dataset is online!',
+      body: 'Click here to visit the page!',
+      url: returnObj.url
+    })
     return returnObj
   } catch (err) {
     showError(err)

@@ -56,6 +56,12 @@
     const container = document.getElementById('actions-and-info-container')
     const input = container.getElementsByTagName('input')[0]
     const newName = input.value
+    // validate name:
+    const re = /^([-a-z0-9._\/])+$/
+    if (!re.test(newName)) {
+      alert('Name of dataset MUST be lower-case and contain only alphanumeric characters along with ".", "_" or "-" characters.')
+      return
+    }
     const newTitle = document.getElementById('newTitle').value
     const parent = container.getElementsByClassName('input-group')[0]
     parent.removeChild(input)

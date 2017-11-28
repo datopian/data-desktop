@@ -22,6 +22,7 @@ const handleException = require('./utils/exception')
 const { error: showError } = require('./dialogs')
 const login = require('./utils/login')
 const push = require('./utils/push')
+const validate = require('./utils/validate')
 
 // Load the app instance from electron
 const { app } = electron
@@ -175,5 +176,13 @@ app.on('ready', async () => {
     } else { // If not logged in then open login window:
       toggleWindow(null, windows.login, tray)
     }
+  })
+
+  // Listen for validate requests:
+  electron.ipcMain.on('validate', async (event, resources) => {
+    if (isDev) console.log('validating...')
+    const validatedResources = await validate(resources)
+    event.sender.send('validation-results', validatedResources)
+    if (isDev) console.log('validation process finished.')
   })
 })

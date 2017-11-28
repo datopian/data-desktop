@@ -1,0 +1,9 @@
+<script>
+  // Do validation of data against table schema:
+  function validate(resources) {
+    // TODO: collect table schema values here
+    ipcRenderer.send('validate', resources)
+  }
+  // And call it once page is loaded:
+  validate('<%- JSON.stringify(dataset.resources).replace(/\'/g, "\\'") %>')
+</script>

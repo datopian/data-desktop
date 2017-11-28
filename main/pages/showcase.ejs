@@ -184,7 +184,7 @@
                        <td><%=field.type%></td>
                        <td><%=field.format%></td>
                        <td><%=field.description%></td>
-                       <td>Valid</td>
+                       <td class="validity-info-<%=index%>">Checking...</td>
                      </tr>
                    <% }) %>
                  </tbody>
@@ -218,6 +218,18 @@
       document.getElementsByClassName('info')[0].style.marginLeft = spanWidth + 13 + 'px';
     </script>
     <%- include('script'); %>
+    <%- include('validate'); %>
+    <script>
+      // Listen for validation response:
+      ipcRenderer.on('validation-results', (event, resources) => {
+        for (let j=0; j<resources.length; j++) {
+          const validityHolders = document.getElementsByClassName(`validity-info-${j}`)
+          for (let i=0; i<validityHolders.length; i++) {
+            validityHolders[i].innerText = resources[j].schema.fields[i].error || 'Valid'
+          }
+        }
+      })
+    </script>
     <link rel="stylesheet" media="screen" href="../static/dpr-js/dist/main.css">
     <script type="text/javascript" src="../static/dpr-js/dist/bundle.js"></script>
   </body>

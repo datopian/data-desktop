@@ -170,19 +170,21 @@
                <table class="table table-bordered table-striped resource-summary">
                  <thead>
                    <tr>
-                     <th>Field Name</th>
-                     <th>Order</th>
-                     <th>Type (Format)</th>
+                     <th>Name</th>
+                     <th>Type</th>
+                     <th>Format</th>
                      <th>Description</th>
+                     <th>Validity</th>
                    </tr>
                  </thead>
                  <tbody>
-                   <% resource.schema.fields.forEach(function(field, index) { %>
+                   <% resource.schema.fields.forEach(function(field) { %>
                      <tr>
                        <th><%=field.name%></th>
-                       <td><%=index%></td>
-                       <td class="type type-<%=field.type%>"><%=field.type%> <% if (field.format) { %>(<%=field.format%>) <% } %></td>
+                       <td><%=field.type%></td>
+                       <td><%=field.format%></td>
                        <td><%=field.description%></td>
+                       <td>Valid</td>
                      </tr>
                    <% }) %>
                  </tbody>

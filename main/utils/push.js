@@ -10,7 +10,7 @@ const { error: showError } = require('../dialogs')
 const notify = require('../notify')
 
 
-module.exports = async (path_, {newName, newTitle}={}) => {
+module.exports = async (path_, descriptor) => {
   const returnObj = {
     loggedIn: null,
     url: null,
@@ -52,14 +52,9 @@ module.exports = async (path_, {newName, newTitle}={}) => {
       dataset = await prepareDatasetFromFile(path_)
     }
 
-    // Set new name for this dataset if user provided one:
-    if (newName) {
-      dataset.descriptor.name = newName
-    }
-    // Also set new title for this dataset:
-    if (newTitle) {
-      dataset.descriptor.title = newTitle
-    }
+    // User provided "descriptor" should overwrite original one, eg, user may
+    // have changed name, title and schema for resources:
+    Object.assign(dataset.descriptor, descriptor)
 
     const datahubConfigs = {
       apiUrl: config.get('api'),

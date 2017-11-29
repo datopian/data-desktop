@@ -166,7 +166,7 @@
               <div id="resource-<%= index %>" class="react-me tables"
                    data-type="resource-preview" data-resource="<%= index %>"></div>
               <% if (resource.format === "csv") { %>
-               <h2 class="section-title">Field information</h2>
+               <h2 class="section-title">Field information <button class="btn btn-default" onclick="editSchema(this)" data-idx="<%=index%>">Edit</button></h2>
                <table class="table table-bordered table-striped resource-summary">
                  <thead>
                    <tr>
@@ -181,9 +181,9 @@
                    <% resource.schema.fields.forEach(function(field) { %>
                      <tr>
                        <th><%=field.name%></th>
-                       <td><%=field.type%></td>
-                       <td><%=field.format%></td>
-                       <td><%=field.description%></td>
+                       <td><input class="type-<%=index%>" value="<%=field.type%>" disabled></td>
+                       <td><input class="format-<%=index%>" value="<%=field.format%>" disabled></td>
+                       <td><input class="description-<%=index%>" value="<%=field.description%>" disabled></td>
                        <td class="validity-info-<%=index%>">Checking...</td>
                      </tr>
                    <% }) %>
@@ -219,17 +219,6 @@
     </script>
     <%- include('script'); %>
     <%- include('validate'); %>
-    <script>
-      // Listen for validation response:
-      ipcRenderer.on('validation-results', (event, resources) => {
-        for (let j=0; j<resources.length; j++) {
-          const validityHolders = document.getElementsByClassName(`validity-info-${j}`)
-          for (let i=0; i<validityHolders.length; i++) {
-            validityHolders[i].innerText = resources[j].schema.fields[i].error || 'Valid'
-          }
-        }
-      })
-    </script>
     <link rel="stylesheet" media="screen" href="../static/dpr-js/dist/main.css">
     <script type="text/javascript" src="../static/dpr-js/dist/bundle.js"></script>
   </body>

@@ -7,7 +7,6 @@ process.on('uncaughtException', (err) => {
 })
 
 module.exports = async (resources) => {
-  resources = JSON.parse(resources)
   await Promise.all(resources.map(async resource => {
     try {
       await validate.validateData(resource.schema, resource.data)

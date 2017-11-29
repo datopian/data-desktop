@@ -5,5 +5,50 @@
     ipcRenderer.send('validate', resources)
   }
   // And call it once page is loaded:
-  validate('<%- JSON.stringify(dataset.resources).replace(/\'/g, "\\'") %>')
+  let resources = JSON.parse(`<%- JSON.stringify(dataset.resources).replace(/\'/g, "\\'") %>`)
+  validate(resources)
+
+  // Listen for validation response:
+  ipcRenderer.on('validation-results', (event, resources) => {
+    for (let j=0; j<resources.length; j++) {
+      const validityHolders = document.getElementsByClassName(`validity-info-${j}`)
+      let defaultValue = 'Valid'
+      for (let i=0; i<validityHolders.length; i++) {
+        if (resources[j].schema.fields[i].error) {
+          validityHolders[i].innerText = resources[j].schema.fields[i].error
+          defaultValue = 'N/A'
+        }
+        validityHolders[i].innerText = resources[j].schema.fields[i].error || defaultValue
+      }
+    }
+  })
+
+  // Edit schema function:
+  function editSchema(button) {
+    const idx = button.dataset.idx
+    typeInputs = document.getElementsByClassName(`type-${idx}`)
+    formatInputs = document.getElementsByClassName(`format-${idx}`)
+    descriptionInputs = document.getElementsByClassName(`description-${idx}`)
+    if (button.innerText === 'Edit') {
+      button.innerText = 'Commit'
+      for (let i=0; i<typeInputs.length; i++) {
+        typeInputs[i].disabled = false
+        formatInputs[i].disabled = false
+        descriptionInputs[i].disabled = false
+      }
+    } else {
+      button.innerText = 'Edit'
+      console.log(resources[0].schema.fields[3].error)
+      for (let i=0; i<typeInputs.length; i++) {
+        typeInputs[i].disabled = true
+        resources[idx].schema.fields[i].type = typeInputs[i].value
+        formatInputs[i].disabled = true
+        resources[idx].schema.fields[i].format = formatInputs[i].value
+        descriptionInputs[i].disabled = true
+        resources[idx].schema.fields[i].description = descriptionInputs[i].value
+      }
+      // Call validate function here:
+      validate(resources)
+    }
+  }
 </script>

@@ -68,6 +68,7 @@ module.exports = async (files) => {
       ejse.data('dpId', JSON.stringify(dataset.descriptor).replace(/\\/g, '\\\\').replace(/\'/g, "\\'"))
       ejse.data('originalPath', path_)
       ejse.data('owner', config.get('profile').username)
+      ejse.data('initialDp', initialDp)
       // Initialize and toggle the window:
       const win = new electron.BrowserWindow({
         width: 1000,

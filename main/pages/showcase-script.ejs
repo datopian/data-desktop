@@ -26,10 +26,13 @@
     container.removeChild(infoMessage)
 
     // Create a descriptor object that will have updated info provided by user, eg, name title and resource schema:
-    const descriptor = JSON.parse('<%- JSON.stringify(dataset).replace(/\\/g, '\\\\').replace(/\'/g, "\\\'") %>')
+    const descriptor = JSON.parse('<%- JSON.stringify(initialDp).replace(/\\/g, '\\\\').replace(/\'/g, "\\\'") %>')
     descriptor.name = newName
     descriptor.title = newTitle
-    descriptor.resources = resources // re-using "resources" variable we've created before and modified accroding to user changes
+    descriptor.resources = resources.map(res => {
+      delete res.data // remove inline "data" property as not needed for push
+      return res
+    }) // re-using "resources" variable we've created before and modified accroding to user changes
 
     ipcRenderer.send('push-request', originalPath, descriptor)
   }

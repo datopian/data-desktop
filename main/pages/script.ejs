@@ -50,46 +50,4 @@
   function authenticate() {
     ipcRenderer.send('login-request')
   }
-
-  // Push:
-  function push(originalPath) {
-    const container = document.getElementById('actions-and-info-container')
-    const input = container.getElementsByTagName('input')[0]
-    const newName = input.value
-    // validate name:
-    const re = /^([-a-z0-9._\/])+$/
-    if (!re.test(newName)) {
-      alert('Name of dataset MUST be lower-case and contain only alphanumeric characters along with ".", "_" or "-" characters.')
-      return
-    }
-    const newTitle = document.getElementById('newTitle').value
-    const parent = container.getElementsByClassName('input-group')[0]
-    parent.removeChild(input)
-
-    const button = container.getElementsByTagName('button')[0]
-    button.innerHTML = 'In progress <i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="spinner"></i>'
-    button.disabled = true
-
-    const message = container.getElementsByTagName('span')[0]
-    message.innerText = message.innerText.replace('Publish at', 'Publishing to')
-    message.innerText += newName
-
-    const infoMessage = container.getElementsByClassName('info')[0]
-    container.removeChild(infoMessage)
-
-    ipcRenderer.send('push-request', originalPath, {newName, newTitle})
-  }
-
-  // Listen for published url:
-  ipcRenderer.on('published-url', (event, url) => {
-    const container = document.getElementById('actions-and-info-container')
-    const button = container.getElementsByTagName('button')[0]
-    button.innerText = 'Open in my default browser!'
-    button.disabled = false
-    button.onclick = () => {
-      shell.openExternal(url)
-    }
-    const message = container.getElementsByTagName('span')[0]
-    message.innerText = 'It is online now! Why not to check it out?'
-  })
 </script>

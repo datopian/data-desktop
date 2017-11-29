@@ -38,7 +38,6 @@
       }
     } else {
       button.innerText = 'Edit'
-      console.log(resources[0].schema.fields[3].error)
       for (let i=0; i<typeInputs.length; i++) {
         typeInputs[i].disabled = true
         resources[idx].schema.fields[i].type = typeInputs[i].value

@@ -31,6 +31,22 @@
     color: $brand-warning;
     font-weight: 100;
   }
+
+  .edit-schema {
+    padding: 0 14px;
+    margin-left: 6px;
+  }
+
+  .resource-summary {
+    input {
+      width: 100%;
+      &:disabled {
+        background-color: transparent;
+        border: 0;
+        padding: 3px;
+      }
+    }
+  }
 }
 h1 {
   margin-bottom: 0;

@@ -6132,6 +6132,15 @@ h2.section-title {
   .showcase .path {
     color: #ff7900;
     font-weight: 100; }
+  .showcase .edit-schema {
+    padding: 0 14px;
+    margin-left: 6px; }
+  .showcase .resource-summary input {
+    width: 100%; }
+    .showcase .resource-summary input:disabled {
+      background-color: transparent;
+      border: 0;
+      padding: 3px; }
 
 h1 {
   margin-bottom: 0; }

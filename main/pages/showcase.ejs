@@ -166,7 +166,7 @@
               <div id="resource-<%= index %>" class="react-me tables"
                    data-type="resource-preview" data-resource="<%= index %>"></div>
               <% if (resource.format === "csv") { %>
-               <h2 class="section-title">Field information <button class="btn btn-default" onclick="editSchema(this)" data-idx="<%=index%>">Edit</button></h2>
+               <h2 class="section-title">Field information <button class="btn btn-default edit-schema" onclick="editSchema(this)" data-idx="<%=index%>">Edit</button></h2>
                <table class="table table-bordered table-striped resource-summary">
                  <thead>
                    <tr>
@@ -180,11 +180,11 @@
                  <tbody>
                    <% resource.schema.fields.forEach(function(field) { %>
                      <tr>
-                       <th><%=field.name%></th>
-                       <td><input class="type-<%=index%>" value="<%=field.type%>" disabled></td>
-                       <td><input class="format-<%=index%>" value="<%=field.format%>" disabled></td>
-                       <td><input class="description-<%=index%>" value="<%=field.description%>" disabled></td>
-                       <td class="validity-info-<%=index%>">Checking...</td>
+                       <th class="col-xs-3"><%=field.name%></th>
+                       <td class="col-xs-2"><input class="type-<%=index%>" value="<%=field.type%>" disabled></td>
+                       <td class="col-xs-1"><input class="format-<%=index%>" value="<%=field.format%>" disabled></td>
+                       <td class="col-xs-5"><input class="description-<%=index%>" value="<%=field.description%>" disabled></td>
+                       <td class="validity-info-<%=index%> col-xs-1">Checking...</td>
                      </tr>
                    <% }) %>
                  </tbody>

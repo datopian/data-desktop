@@ -1,6 +1,6 @@
 {
   "name": "Data",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "description": "Desktop application for DataHub",
   "main": "main/index.js",
   "scripts": {

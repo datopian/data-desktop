@@ -69,6 +69,11 @@ module.exports = async (files) => {
       ejse.data('originalPath', path_)
       ejse.data('owner', config.get('profile').username)
       ejse.data('initialDp', initialDp)
+      ejse.data('fieldTypes', [
+        'string', 'number', 'integer', 'boolean', 'object', 'array', 'date',
+        'time', 'datetime', 'year', 'yearmonth', 'duration', 'geopoint',
+        'geojson', 'any'
+      ])
       // Initialize and toggle the window:
       const win = new electron.BrowserWindow({
         width: 1000,

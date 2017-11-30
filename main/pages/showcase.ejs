@@ -180,11 +180,21 @@
                  <tbody>
                    <% resource.schema.fields.forEach(function(field) { %>
                      <tr>
-                       <th class="col-xs-3"><%=field.name%></th>
-                       <td class="col-xs-2"><input class="type-<%=index%>" value="<%=field.type%>" disabled></td>
+                       <th class="col-xs-2"><%=field.name%></th>
+                       <td class="col-xs-1">
+                          <select class="type-<%=index%>" disabled>
+                            <% fieldTypes.forEach(function(type) { %>
+                              <% if (type === field.type) { %>
+                                <option value="<%= type %>" selected><%= type %></option>
+                              <% } else { %>
+                                <option value="<%= type %>"><%= type %></option>
+                              <% } %>
+                            <% }) %>
+                          </select>
+                       </td>
                        <td class="col-xs-1"><input class="format-<%=index%>" value="<%=field.format%>" disabled></td>
                        <td class="col-xs-5"><input class="description-<%=index%>" value="<%=field.description%>" disabled></td>
-                       <td class="validity-info-<%=index%> col-xs-1">Checking...</td>
+                       <td class="validity-info-<%=index%> col-xs-3">Checking...</td>
                      </tr>
                    <% }) %>
                  </tbody>

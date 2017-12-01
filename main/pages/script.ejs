@@ -1,6 +1,13 @@
 <script>
   const {ipcRenderer, shell} = require('electron')
   const Nanobar = require('nanobar')
+  // Setup Sentry for renderer process:
+  const Raven = require('raven-js')
+  Raven.config('https://fafe5a09a4ff43d6a69b8d4163790ae4@sentry.io/253155').install()
+  window.addEventListener('unhandledrejection', function (event) {
+      Raven.captureException(event.reason)
+  })
+
   const updateOnlineStatus = () => {
     ipcRenderer.send('online-status-changed', navigator.onLine ? 'online' : 'offline')
   }

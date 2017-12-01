@@ -28,18 +28,20 @@ const validate = require('./utils/validate')
 // Load the app instance from electron
 const { app } = electron
 
-// Setup Sentry for main process:
-const Raven = require('raven')
-Raven.config('https://fafe5a09a4ff43d6a69b8d4163790ae4:c349dd6a453143bb8f35f25e585b019f@sentry.io/253155', {
-  captureUnhandledRejections: true,
-  tags: {
-    process: process.type,
-    electron: process.versions.electron,
-    chrome: process.versions.chrome,
-    platform: os.platform(),
-    platform_release: os.release()
-  }
-}).install()
+if (!isDev) {
+  // Setup Sentry for main process:
+  const Raven = require('raven')
+  Raven.config('https://fafe5a09a4ff43d6a69b8d4163790ae4:c349dd6a453143bb8f35f25e585b019f@sentry.io/253155', {
+    captureUnhandledRejections: true,
+    tags: {
+      process: process.type,
+      electron: process.versions.electron,
+      chrome: process.versions.chrome,
+      platform: os.platform(),
+      platform_release: os.release()
+    }
+  }).install()
+}
 
 // Set the application's name
 app.setName('Data')

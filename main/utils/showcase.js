@@ -8,7 +8,7 @@ const fs = require('fs-extra')
 const {Dataset} = require('data.js')
 const { resolve: resolvePath } = require('app-root-path')
 const toArray = require('stream-to-array')
-const {config} = require('datahub-client')
+const {config, validate} = require('datahub-client')
 
 // Utils
 const prepareDatasetFromFile = require('./prepare')
@@ -24,10 +24,23 @@ module.exports = async (files) => {
       // If it is "datapackage.json" then use it, otherwise generate one from data file:
       const pathParts = path.parse(path_)
       let dataset
-      if (pathParts.base === 'datapackage.json') {
-        dataset = await Dataset.load(path_)
-      } else {
-        dataset = await prepareDatasetFromFile(path_)
+      try {
+        if (pathParts.base === 'datapackage.json') {
+          dataset = await Dataset.load(path_)
+        } else {
+          dataset = await prepareDatasetFromFile(path_)
+        }
+      } catch (err) {
+        showError(err.message)
+        return
+      }
+      // Validate metadata before rendering the showcase page:
+      try {
+        await validate.validateMetadata(dataset.descriptor)
+      } catch (err) {
+        // If invalid, show the first error:
+        showError(err[0].message)
+        return
       }
       // Making a copy of dp to use in the compiled README
       const initialDp = Object.assign({}, dataset.descriptor)

@@ -34,11 +34,13 @@ module.exports = async (path_, descriptor) => {
     returnObj.loggedIn = true
   }
 
-  // Show notification that push has started:
-  notify({
-    title: 'Publishing your dataset',
-    body: 'We will notify you once publishing is done.'
-  })
+  if (!isDev) {
+    // Show notification that push has started:
+    notify({
+      title: 'Publishing your dataset',
+      body: 'We will notify you once publishing is done.'
+    })
+  }
 
   try {
     let dataset
@@ -71,11 +73,13 @@ module.exports = async (path_, descriptor) => {
     await datahub.push(dataset, options)
 
     returnObj.url = urljoin(config.get('domain'), datahubConfigs.owner, dataset.descriptor.name)
-    notify({
-      title: 'Your dataset is online!',
-      body: 'Click here to visit the page!',
-      url: returnObj.url
-    })
+    if (!isDev) {
+      notify({
+        title: 'Your dataset is online!',
+        body: 'Click here to visit the page!',
+        url: returnObj.url
+      })
+    }
     return returnObj
   } catch (err) {
     showError(err)

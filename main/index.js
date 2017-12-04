@@ -11,6 +11,8 @@ const fixPath = require('fix-path')
 const { resolve: resolvePath } = require('app-root-path')
 const ejse = require('ejs-electron')
 const {config} = require('datahub-client')
+const ua = require('universal-analytics')
+const firstRun = require('first-run')
 
 // Utils
 const { version } = require('../package')
@@ -28,7 +30,16 @@ const validate = require('./utils/validate')
 // Load the app instance from electron
 const { app } = electron
 
+let visitor
 if (!isDev) {
+  // Setup GA - if user is logged in then use his/her id, otherwise use auto-generated one:
+  const userId = config.get('profile') ? config.get('profile').id : config.get('id')
+  if (userId) {
+    visitor = ua('UA-80458846-6', userId, {strictCidFormat: false})
+  } else {
+    visitor = ua('UA-80458846-6')
+  }
+
   // Setup Sentry for main process:
   const Raven = require('raven')
   Raven.config('https://fafe5a09a4ff43d6a69b8d4163790ae4:c349dd6a453143bb8f35f25e585b019f@sentry.io/253155', {
@@ -41,6 +52,11 @@ if (!isDev) {
       platform_release: os.release()
     }
   }).install()
+} else {
+  // Stub object for dev env:
+  visitor = {event: (a, b) => {
+    return {send: () => {}}
+  }}
 }
 
 // Set the application's name
@@ -50,8 +66,15 @@ app.setName('Data')
 // Within the bundled app, the path would otherwise be different
 fixPath()
 
+// If this is the first run then track with GA:
+if (!isDev && firstRun()) {
+  visitor.event('Events', 'First run').send()
+}
+
 // Notify user when the app update is donwloaded:
 autoUpdater.on('update-downloaded', (info) => {
+  // Track it with GA:
+  visitor.event('Events', 'App auto updated').send()
   notify({
     title: 'New Data-Desktop is ready!',
     body: 'Quit and open the app to start using the latest version!'
@@ -151,10 +174,13 @@ app.on('ready', async () => {
     // Check if user is logged in. If so proceed, if not require to login:
     config.setup()
     if (!config.get('token')) {
+      // Track it with GA:
+      visitor.event('Events', 'File dropped but not logged in').send()
       toggleWindow(null, windows.login, tray)
       return
     }
-
+    // Track as successful file drop with GA:
+    visitor.event('Events', 'File dropped successfully').send()
     await showcase(files)
   }
 
@@ -177,16 +203,26 @@ app.on('ready', async () => {
   electron.ipcMain.on('login-request', async (event) => {
     if (isDev) console.log('login in now...')
     const result = await login()
+    // Track login with GA:
+    if (result.success) {
+      visitor.event('Events', 'Logged in successfully').send()
+    } else {
+      visitor.event('Events', 'Error on login').send()
+    }
     if (isDev) console.log('Login success: ' + result.success)
   })
 
   // Listen for push requests:
   electron.ipcMain.on('push-request', async (event, originalPath, descriptor) => {
     if (isDev) console.log('commencing push...')
+    // Track push requests with GA:
+    visitor.event('Events', 'Push requested').send()
     const result = await push(originalPath, descriptor)
 
     if (result.loggedIn) {
       if (isDev) console.log('push done! URL: ' + result.url)
+      // Track successful push with GA:
+      visitor.event('Events', 'Successfully pushed').send()
       // Send back url to renderer:
       event.sender.send('published-url', result.url)
     } else { // If not logged in then open login window:
@@ -197,6 +233,8 @@ app.on('ready', async () => {
   // Listen for validate requests:
   electron.ipcMain.on('validate', async (event, resources) => {
     if (isDev) console.log('validating...')
+    // Track validation request with GA:
+    visitor.event('Events', 'Validation request').send()
     const validatedResources = await validate(resources)
     event.sender.send('validation-results', validatedResources)
     if (isDev) console.log('validation process finished.')

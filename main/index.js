@@ -50,8 +50,13 @@ if (!isDev) {
       chrome: process.versions.chrome,
       platform: os.platform(),
       platform_release: os.release()
+    },
+    shouldSendCallback: (data) => {
+      return !data.message.includes('TableSchemaError')
     }
-  }).install()
+  }).install((err, initialErr, eventId) => {
+    console.error('Raven: a fatal, non-recoverable error.')
+  })
 } else {
   // Stub object for dev env:
   visitor = {event: (a, b) => {

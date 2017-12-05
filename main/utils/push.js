@@ -70,6 +70,8 @@ module.exports = async (path_, descriptor, options) => {
     await datahub.push(dataset, options)
 
     returnObj.url = urljoin(config.get('domain'), datahubConfigs.owner, dataset.descriptor.name)
+    // Add jwt as params in the URL so when users are logged in when visiting the website:
+    returnObj.url += `?jwt=${config.get('token')}&username=${config.get('profile').username}&id=${config.get('profile').id}&email=${config.get('profile').email}`
     if (!isDev) {
       notify({
         title: 'Your dataset is online!',

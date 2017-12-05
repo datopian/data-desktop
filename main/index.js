@@ -218,11 +218,11 @@ app.on('ready', async () => {
   })
 
   // Listen for push requests:
-  electron.ipcMain.on('push-request', async (event, originalPath, descriptor) => {
+  electron.ipcMain.on('push-request', async (event, originalPath, descriptor, options) => {
     if (isDev) console.log('commencing push...')
     // Track push requests with GA:
     visitor.event('Events', 'Push requested').send()
-    const result = await push(originalPath, descriptor)
+    const result = await push(originalPath, descriptor, options)
 
     if (result.loggedIn) {
       if (isDev) console.log('push done! URL: ' + result.url)

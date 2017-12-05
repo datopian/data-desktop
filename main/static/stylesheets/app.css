@@ -6141,6 +6141,11 @@ h2.section-title {
       background-color: transparent;
       border: 0;
       padding: 3px; }
+  .showcase .findability {
+    margin-top: 10px;
+    text-align: center; }
+    .showcase .findability input {
+      margin-left: 10px; }
 
 h1 {
   margin-bottom: 0; }

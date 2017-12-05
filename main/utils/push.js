@@ -10,7 +10,7 @@ const { error: showError } = require('../dialogs')
 const notify = require('../notify')
 
 
-module.exports = async (path_, descriptor) => {
+module.exports = async (path_, descriptor, options) => {
   const returnObj = {
     loggedIn: null,
     url: null,
@@ -67,9 +67,6 @@ module.exports = async (path_, descriptor) => {
     }
 
     const datahub = new DataHub(datahubConfigs)
-    const options = {
-      findability: 'published'
-    }
     await datahub.push(dataset, options)
 
     returnObj.url = urljoin(config.get('domain'), datahubConfigs.owner, dataset.descriptor.name)

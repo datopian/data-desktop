@@ -34,7 +34,15 @@
       return res
     }) // re-using "resources" variable we've created before and modified accroding to user changes
 
-    ipcRenderer.send('push-request', originalPath, descriptor)
+    // Set findability in options:
+    const radioButtons = document.getElementsByName('findability')
+    let options
+    for (let i=0; i<radioButtons.length; i++) {
+      if (radioButtons[i].checked) {
+        options = {findability: radioButtons[i].value}
+      }
+    }
+    ipcRenderer.send('push-request', originalPath, descriptor, options)
   }
 
   // Listen for published url:

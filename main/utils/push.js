@@ -67,9 +67,21 @@ module.exports = async (path_, descriptor, options) => {
     }
 
     const datahub = new DataHub(datahubConfigs)
-    await datahub.push(dataset, options)
+    const pushResult = await datahub.push(dataset, options)
+    if (!pushResult.success) {
+      if (isDev) {
+        console.log('Push has failed:\n' + JSON.stringify(pushResult))
+      } else {
+        notify({
+          title: 'Some error occured while pushing your dataset',
+          body: 'Please, try again later or report this error on our chat channel.',
+          url: 'https://gitter.im/datahubio/chat'
+        })
+      }
+    }
 
-    returnObj.url = urljoin(config.get('domain'), datahubConfigs.owner, dataset.descriptor.name)
+    const [ownerid, datasetName, revisionId] = pushResult.flow_id.split('/')
+    returnObj.url = urljoin(config.get('domain'), datahubConfigs.owner, datasetName, 'v', revisionId)
     // Add jwt as params in the URL so when users are logged in when visiting the website:
     returnObj.url += `?jwt=${config.get('token')}&username=${config.get('profile').username}&id=${config.get('profile').id}&email=${config.get('profile').email}`
     if (!isDev) {
